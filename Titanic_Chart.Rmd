@@ -1,0 +1,73 @@
+---
+title: "Titanic_Chart"
+author: "Pluem"
+date: "31/5/2564"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+#read data
+setwd("C:/Users/Admin/Documents/GitHub/Titanic_EDA/Titanic_EDA")
+library(readr)
+train <- read_csv("train.csv")
+View(train)
+```
+
+```{r}
+#create barplot the survived of sex 
+barplot(table(as.factor(train$Sex)),
+        main="Titanic Passenger's Sex",
+        xlab="Sex",
+        col="darkgoldenrod1",
+        ylim=c(0,700),
+        ylab="Number of passenger",las=1)
+```
+
+```{r}
+#Find the survived
+survived = train[train$Survived == 1,]
+#Find who did not survive
+notsurvive = train[train$Survived == 0,]
+```
+
+```{r}
+#Create barplot the survived of sex
+barplot(table(as.factor(survived$Sex)),
+        main="survived titanic passenger",
+        xlab="sex",
+        col="coral",
+        ylim=c(0,300),
+        ylab="Number of passenger",las=1)
+```
+
+```{r}
+#Create barplot the not-survived of sex
+barplot(table(as.factor(notsurvive$Sex)),
+        main="Not-survive titanic passenger",
+        xlab="sex",
+        col="cornflowerblue",
+        ylim=c(0,600),
+        ylab="Number of passenger",las=1)
+```
+
+```{r}
+#compare all by sex
+library(ggplot2)
+library(tidyr)
+col<-c("coral1","cyan3")
+
+ggplot(data=train, aes(train$Sex,fill = factor(Survived))) + geom_bar(stat = "count", position = "stack") + xlab("Sex") + 
+scale_fill_manual(values =  col) + ggtitle("Gender")
+```
+
+```{r}
+#create age histogram plotting 
+hist(train$Age, 
+     main="Histogram of Age",
+     xlab = "Age(year)",
+     las=1,col=c("chocolate2"))
+```
